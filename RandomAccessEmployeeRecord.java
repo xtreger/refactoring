@@ -49,7 +49,7 @@ public class RandomAccessEmployeeRecord extends Employee
          name[ count ] = temp;
       } // end for     
       
-      return new String( name ).replace( '\0', ' ' );
+      return new String( name ).replace( '\0', ' ' ).trim();
    } // end readName
 
    // Write a record to specified RandomAccessFile
