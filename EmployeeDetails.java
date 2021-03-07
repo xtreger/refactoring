@@ -1,9 +1,9 @@
 
-/* * 
- * This is a menu driven system that will allow users to define a data structure representing a collection of 
+/* *
+ * This is a menu driven system that will allow users to define a data structure representing a collection of
  * records that can be displayed both by means of a dialog that can be scrolled through and by means of a table
  * to give an overall view of the collection contents.
- * 
+ *
  * */
 
 import net.miginfocom.swing.MigLayout;
@@ -27,7 +27,9 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 	private static final DecimalFormat format = new DecimalFormat("\u20ac ###,###,##0.00");
 	// decimal format for active currency text field
 	private static final DecimalFormat fieldFormat = new DecimalFormat("0.00");
-	// hold object start position in file
+	// holds color object
+    private final Color lightPink = new Color(255, 150, 150);
+    // hold object start position in file
 	private long currentByteStart = 0;
 	private RandomFile application = new RandomFile();
 	// display files in File Chooser only with extension .dat
@@ -148,29 +150,31 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 	// initialize navigation panel
 	private JPanel navigPanel() {
 		JPanel navigPanel = new JPanel();
+		int imageWidth = 17;
+		int imageHeight = 17;
 
 		navigPanel.setBorder(BorderFactory.createTitledBorder("Navigate"));
 		navigPanel.add(first = new JButton(new ImageIcon(
-				new ImageIcon("first.png").getImage().getScaledInstance(17, 17, java.awt.Image.SCALE_SMOOTH))));
-		first.setPreferredSize(new Dimension(17, 17));
+				new ImageIcon("first.png").getImage().getScaledInstance(imageWidth, imageHeight, java.awt.Image.SCALE_SMOOTH))));
+		first.setPreferredSize(new Dimension(imageWidth, imageHeight));
 		first.addActionListener(this);
 		first.setToolTipText("Display first Record");
 
 		navigPanel.add(previous = new JButton(new ImageIcon(new ImageIcon("previous.png").getImage()
-				.getScaledInstance(17, 17, java.awt.Image.SCALE_SMOOTH))));
-		previous.setPreferredSize(new Dimension(17, 17));
+				.getScaledInstance(imageWidth, imageHeight, java.awt.Image.SCALE_SMOOTH))));
+		previous.setPreferredSize(new Dimension(imageWidth, imageHeight));
 		previous.addActionListener(this);
-		previous.setToolTipText("Display next Record");
+		previous.setToolTipText("Display previous Record");
 
 		navigPanel.add(next = new JButton(new ImageIcon(
-				new ImageIcon("next.png").getImage().getScaledInstance(17, 17, java.awt.Image.SCALE_SMOOTH))));
-		next.setPreferredSize(new Dimension(17, 17));
+				new ImageIcon("next.png").getImage().getScaledInstance(imageWidth, imageHeight, java.awt.Image.SCALE_SMOOTH))));
+		next.setPreferredSize(new Dimension(imageWidth, imageHeight));
 		next.addActionListener(this);
-		next.setToolTipText("Display previous Record");
+		next.setToolTipText("Display next Record");
 
 		navigPanel.add(last = new JButton(new ImageIcon(
-				new ImageIcon("last.png").getImage().getScaledInstance(17, 17, java.awt.Image.SCALE_SMOOTH))));
-		last.setPreferredSize(new Dimension(17, 17));
+				new ImageIcon("last.png").getImage().getScaledInstance(imageWidth, imageHeight, java.awt.Image.SCALE_SMOOTH))));
+		last.setPreferredSize(new Dimension(imageWidth, imageHeight));
 		last.addActionListener(this);
 		last.setToolTipText("Display last Record");
 
@@ -445,7 +449,7 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 			} // end if
 		} // end try
 		catch (NumberFormatException e) {
-			searchByIdField.setBackground(new Color(255, 150, 150));
+			searchByIdField.setBackground(lightPink);
 			JOptionPane.showMessageDialog(null, "Wrong ID format!");
 		} // end catch
 		searchByIdField.setBackground(Color.WHITE);
@@ -512,9 +516,13 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 		if (((String) fullTimeCombo.getSelectedItem()).equalsIgnoreCase("Yes"))
 			fullTime = true;
 
-		theEmployee = new Employee(Integer.parseInt(idField.getText()), ppsField.getText().toUpperCase(),
-				surnameField.getText().toUpperCase(), firstNameField.getText().toUpperCase(),
-				genderCombo.getSelectedItem().toString().charAt(0), departmentCombo.getSelectedItem().toString(),
+		theEmployee = new Employee(
+		        Integer.parseInt(idField.getText()),
+                ppsField.getText().toUpperCase(),
+				surnameField.getText().toUpperCase(),
+                firstNameField.getText().toUpperCase(),
+				genderCombo.getSelectedItem().toString().charAt(0),
+                departmentCombo.getSelectedItem().toString(),
 				Double.parseDouble(salaryField.getText()), fullTime);
 
 		return theEmployee;
@@ -628,8 +636,8 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 		// check for correct PPS format based on assignment description
 		if (pps.length() == 8 || pps.length() == 9) {
 			if (Character.isDigit(pps.charAt(0)) && Character.isDigit(pps.charAt(1))
-					&& Character.isDigit(pps.charAt(2))	&& Character.isDigit(pps.charAt(3)) 
-					&& Character.isDigit(pps.charAt(4))	&& Character.isDigit(pps.charAt(5)) 
+					&& Character.isDigit(pps.charAt(2))	&& Character.isDigit(pps.charAt(3))
+					&& Character.isDigit(pps.charAt(4))	&& Character.isDigit(pps.charAt(5))
 					&& Character.isDigit(pps.charAt(6))	&& Character.isLetter(pps.charAt(7))
 					&& (pps.length() == 8 || Character.isLetter(pps.charAt(8)))) {
 				// open file for reading
@@ -683,45 +691,45 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 		// if any of inputs are in wrong format, colour text field and display
 		// message
 		if (ppsField.isEditable() && ppsField.getText().trim().isEmpty()) {
-			ppsField.setBackground(new Color(255, 150, 150));
+			ppsField.setBackground(lightPink);
 			valid = false;
 		} // end if
 		if (ppsField.isEditable() && correctPps(ppsField.getText().trim(), currentByteStart)) {
-			ppsField.setBackground(new Color(255, 150, 150));
+			ppsField.setBackground(lightPink);
 			valid = false;
 		} // end if
 		if (surnameField.isEditable() && surnameField.getText().trim().isEmpty()) {
-			surnameField.setBackground(new Color(255, 150, 150));
+			surnameField.setBackground(lightPink);
 			valid = false;
 		} // end if
 		if (firstNameField.isEditable() && firstNameField.getText().trim().isEmpty()) {
-			firstNameField.setBackground(new Color(255, 150, 150));
+			firstNameField.setBackground(lightPink);
 			valid = false;
 		} // end if
 		if (genderCombo.getSelectedIndex() == 0 && genderCombo.isEnabled()) {
-			genderCombo.setBackground(new Color(255, 150, 150));
+			genderCombo.setBackground(lightPink);
 			valid = false;
 		} // end if
 		if (departmentCombo.getSelectedIndex() == 0 && departmentCombo.isEnabled()) {
-			departmentCombo.setBackground(new Color(255, 150, 150));
+			departmentCombo.setBackground(lightPink);
 			valid = false;
 		} // end if
 		try {// try to get values from text field
 			Double.parseDouble(salaryField.getText());
 			// check if salary is greater than 0
 			if (Double.parseDouble(salaryField.getText()) < 0) {
-				salaryField.setBackground(new Color(255, 150, 150));
+				salaryField.setBackground(lightPink);
 				valid = false;
 			} // end if
 		} // end try
 		catch (NumberFormatException num) {
 			if (salaryField.isEditable()) {
-				salaryField.setBackground(new Color(255, 150, 150));
+				salaryField.setBackground(lightPink);
 				valid = false;
 			} // end if
 		} // end catch
 		if (fullTimeCombo.getSelectedIndex() == 0 && fullTimeCombo.isEnabled()) {
-			fullTimeCombo.setBackground(new Color(255, 150, 150));
+			fullTimeCombo.setBackground(lightPink);
 			valid = false;
 		} // end if
 			// display message if any input or format is wrong
